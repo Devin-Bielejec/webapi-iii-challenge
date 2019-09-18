@@ -47,8 +47,12 @@ router.get('/:id/posts', validateUserId, (req, res) => {
     .catch(err => res.status(500).json({error: "There was a problem retrieving the user posts from the server"}))
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateUserId, (req, res) => {
+    const { id } = req.params;
 
+    db.remove(id)
+    .then(users => res.status(200).json(users))
+    .catch(err => res.status(500).json({message: "Server Error"}))
 });
 
 router.put('/:id', (req, res) => {
