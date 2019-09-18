@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require('express');
 const server = express();
 server.use(express.json());
@@ -23,4 +25,6 @@ server.get('/', (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`)
 });
 
-server.listen(5000, () => console.log("API API API API API "))
+const port = process.env.PORT;
+
+server.listen(port, () => console.log(`Running on port ${port}`))
