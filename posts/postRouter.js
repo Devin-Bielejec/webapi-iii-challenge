@@ -23,8 +23,14 @@ router.delete('/:id', validatePostId, (req, res) => {
     .catch(error => res.status(500).json({error: "Server error when deleting"}))
 });
 
-router.put('/:id', (req, res) => {
-
+//update by id
+router.put('/:id', validatePostId, (req, res) => {
+    const { id } = req.params;
+    const { text } = req.body;
+    console.log(id, text);
+    db.update(id, {text})
+    .then(posts => res.status(200).json(posts))
+    .catch(err => res.status(500).json({error: "Server error while updating the post"}))
 });
 
 // custom middleware
@@ -33,7 +39,7 @@ function validatePostId(req, res, next) {
     const { id } = req.params;
 
     db.getById(id)
-    .then( posts => res.status(200).json(posts))
+    .then( posts => null)
     .catch(error => res.status(404).json({error: "Id not found"}))
 
     next();
