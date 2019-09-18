@@ -29,6 +29,12 @@ const validateUser = (req, res, next) => {
   next();
 }
 
+const validatePost = (req, res, next) => {
+  req.body ? req.body.name ? null 
+  : res.status(400).json({message: "missing required name field"}) 
+  : res.status(400).json({message: "missing user data"})
+}
+
 
 
 server.get('/', (req, res) => {
