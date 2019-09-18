@@ -29,8 +29,12 @@ router.get('/', (req, res) => {
     .catch(error => res.status(500).json({error: "Error retrieving users"}))
 });
 
-router.get('/:id', (req, res) => {
-
+//get user by id
+router.get('/:id', validateUserId, (req, res) => {
+    const { id } = req.params;
+    db.getById(id)
+    .then(user => res.status(200).json(user))
+    .catch(error => res.status(500).json({error: "Error retrieving user"}))
 });
 
 router.get('/:id/posts', (req, res) => {
@@ -49,7 +53,12 @@ router.put('/:id', (req, res) => {
 
 function validateUserId(req, res, next) {
     const { id } = req.params;
-    id ? req.user = { id } : res.status(400).json({message: "invalid user id"})
+    db.getById(id)
+    .then( (users) => {
+        console.log(users);
+        users === undefined ? res.status(400).json({message: "user id not found"}) : req.user = { id };
+    })
+    .catch(err => res.status(500).json({message: "Server error retrieving id"}))
     next();
 };
 
