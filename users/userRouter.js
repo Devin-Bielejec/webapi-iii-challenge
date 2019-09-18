@@ -13,13 +13,16 @@ router.post('/', validateUser, (req, res) => {
     })
 });
 
-//insert user by id??? so confused by this one
+//insert post by user id
 router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
-    db.insert(req.body)
-    .then(user => res.status(200).json(user))
-    .catch(err => {
-        res.status(500).json({error: "Server Error inserting user"})
-    })
+    console.log(req.body);
+    const { text } = req.body;
+    const { id } = req.params;
+    const post = { user_id: id, text }
+    console.log(post);
+    postdb.insert(post)
+    .then(posts => res.status(200).json(posts))
+    .catch(err => res.status(500).json({message: "Server Error"}))
 });
 
 //get users
@@ -37,8 +40,11 @@ router.get('/:id', validateUserId, (req, res) => {
     .catch(error => res.status(500).json({error: "Error retrieving user"}))
 });
 
-router.get('/:id/posts', (req, res) => {
-
+//get posts of user id
+router.get('/:id/posts', validateUserId, (req, res) => {
+    db.getUserPosts(req.params)
+    .then( posts => res.status(200).json(posts))
+    .catch(err => res.status(500).json({error: "There was a problem retrieving the user posts from the server"}))
 });
 
 router.delete('/:id', (req, res) => {
@@ -71,9 +77,11 @@ function validateUser(req, res, next) {
 };
 
 function validatePost(req, res, next) {
-    req.body ? req.body.name ? null 
-    : res.status(400).json({message: "missing required name field"}) 
+    req.body ? req.body.text ? null 
+    : res.status(400).json({message: "missing required text field"}) 
     : res.status(400).json({message: "missing user data"})
+
+    next();
 };
 
 module.exports = router;
