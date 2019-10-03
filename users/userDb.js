@@ -36,7 +36,7 @@ function insert(user) {
 
 function update(id, changes) {
   return db('users')
-    .where({ id })
+    .where('id', Number(id))
     .update(changes);
 }
 

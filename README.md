@@ -10,12 +10,12 @@ You are allowed, and **encouraged**, to collaborate with other peers. Please fol
 
 ## Project Set Up
 
-- [ ] Create a forked copy of this project.
-- [ ] Add your project manager as collaborator on Github.
-- [ ] Clone your OWN version of the repository.
-- [ ] Create a new branch: git checkout -b `<firstName-lastName>`.
-- [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
-- [ ] Push commits: git push origin `<firstName-lastName>`.
+- [X] Create a forked copy of this project.
+- [X] Add your project manager as collaborator on Github.
+- [X] Clone your OWN version of the repository.
+- [X] Create a new branch: git checkout -b `<firstName-lastName>`.
+- [X] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
+- [X] Push commits: git push origin `<firstName-lastName>`.
 
 Follow these steps for completing your project.
 
@@ -26,17 +26,24 @@ Follow these steps for completing your project.
 
 ## Minimum Viable Product
 
-1. Write and implement four custom `middleware` functions, detailed below.
+[X] Write and implement four custom `middleware` functions, detailed below.
 1. Build an API to let clients perform CRUD operations on `users`.
+get users/:id
+post users/:id
+delete users/:id
+update users/:id
+
 1. Add endpoints to retrieve the list of `posts` for a `user` and to store a new `post` for a `user`.
+get posts/:userid
+post posts/:userid
 
 #### Custom Middleware Requirements
 
-- `logger()`
-  - `logger` logs to the console the following information about each request: request method, request url, and a timestamp
+[X] `logger()`
+  [X] `logger` logs to the console the following information about each request: request method, request url, and a timestamp
   - this middleware runs on every request made to the API
 
-- `validateUserId()`
+[X] `validateUserId()`
   - `validateUserId` validates the user id on every request that expects a user id parameter
   - if the `id` parameter is valid, store that user object as `req.user`
   - if the `id` parameter does not match any user id in the database, cancel the request and respond with status `400` and `{ message: "invalid user id" }`
@@ -84,7 +91,7 @@ The _Database Schemas_ for the `users` and `posts` resources are:
 | text    | text             | required                                            |
 | user_id | unsigned integer | required, must be the `id` of an existing `user`              |
 
-We have provided test data for the resources.
+We have provided test data for the resources.efefefefef
 
 ## Stretch Goals
 
